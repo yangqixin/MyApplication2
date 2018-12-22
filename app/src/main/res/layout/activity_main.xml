@@ -1,18 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:editable="false"
+            android:hint="@string/shuru" />
 
-</android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/output"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:editable="false"
+            android:gravity="right"
+            android:hint="@string/shuchu" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/seven"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:text="@string/seven"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/eight"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_toRightOf="@id/seven"
+                android:text="@string/eight"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/nine"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_toRightOf="@id/eight"
+                android:text="@string/nine"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/nine"
+                android:text="@string/add"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/four"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/seven"
+                android:text="@string/four"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/five"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/eight"
+                android:layout_toRightOf="@id/four"
+                android:text="@string/five"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/six"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/nine"
+                android:layout_toRightOf="@id/five"
+                android:text="@string/six"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/subtract"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/add"
+                android:layout_toRightOf="@id/six"
+                android:text="@string/subtract"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/one"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/four"
+                android:text="@string/one"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/two"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/five"
+                android:layout_toRightOf="@id/one"
+                android:text="@string/two"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/three"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/six"
+                android:layout_toRightOf="@id/two"
+                android:text="@string/three"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/multiply"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/subtract"
+                android:layout_toRightOf="@id/three"
+                android:text="@string/multiply"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/zero"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/one"
+                android:text="@string/zero"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/two"
+                android:layout_toRightOf="@id/zero"
+                android:text="@string/clear"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/result"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/three"
+                android:layout_toRightOf="@id/clear"
+                android:text="@string/result"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/divide"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/multiply"
+                android:layout_toRightOf="@id/result"
+                android:text="@string/divide"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/dot"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/zero"
+                android:text="@string/dot"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/zhengfu"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/clear"
+                android:layout_toRightOf="@id/dot"
+                android:text="@string/zhengfu"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/kaifang"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/result"
+                android:layout_toRightOf="@id/zhengfu"
+                android:text="@string/kaifang"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/pingfang"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/divide"
+                android:layout_toRightOf="@id/kaifang"
+                android:text="@string/pingfang"
+                android:textSize="40sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

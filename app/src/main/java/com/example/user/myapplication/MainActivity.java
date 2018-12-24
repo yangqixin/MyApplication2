@@ -1,375 +1,283 @@
 package com.example.user.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-    /** Called when the activity is first created. */
-    private EditText output=null;
-    private EditText input=null;
-    private Button btn0=null;
-    private Button btn1=null;
-    private Button btn2=null;
-    private Button btn3=null;
-    private Button btn4=null;
-    private Button btn5=null;
-    private Button btn6=null;
-    private Button btn7=null;
-    private Button btn8=null;
-    private Button btn9=null;
-    private Button btnadd=null;
-    private Button btnsubtract=null;
-    private Button btnmultiply=null;
-    private Button btndivide=null;
-    private Button btnclear=null;
-    private Button btnresult=null;
-    private Button btndot=null;
-    private Button btnzhengshu=null;
-    private Button btnkaifang=null;
-    private Button btnpingfang=null;
 
-
-    private String str="";//保存数字
-    private String strold="";//原数字
-    private char act=' ';//记录“加减乘除等于”符号
-    private int count=0;//判断要计算的次数，如果超过一个符号，先算出来一部分
-    private Double result=0.0;//计算的输出结果
-    private  Boolean errBoolean=false;//有错误的时候为true，无错为false
-    private Boolean flagBoolean=false;//一个标志，如果为true，可以响应运算消息，如果为false，不响应运算消息，只有前面是数字才可以响应运算消息
-    private  Boolean flagDot=false; //小数点标志位
+    private TextView input;
+    private TextView result;
+    private StringBuilder str = new StringBuilder();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        output=(EditText)findViewById(R.id.output);
-        input=(EditText)findViewById(R.id.input);
-        btn0=(Button)findViewById(R.id.zero);
-        btn1=(Button)findViewById(R.id.one);
-        btn2=(Button)findViewById(R.id.two);
-        btn3=(Button)findViewById(R.id.three);
-        btn4=(Button)findViewById(R.id.four);
-        btn5=(Button)findViewById(R.id.five);
-        btn6=(Button)findViewById(R.id.six);
-        btn7=(Button)findViewById(R.id.seven);
-        btn8=(Button)findViewById(R.id.eight);
-        btn9=(Button)findViewById(R.id.nine);
-        btnadd=(Button)findViewById(R.id.add);
-        btnsubtract=(Button)findViewById(R.id.subtract);
-        btnmultiply=(Button)findViewById(R.id.multiply);
-        btndivide=(Button)findViewById(R.id.divide);
-        btnclear=(Button)findViewById(R.id.clear);
-        btnresult=(Button)findViewById(R.id.result);
-        btndot=(Button)findViewById(R.id.dot);
-        btnzhengshu=(Button)findViewById(R.id.zhengfu);
-        btnkaifang=(Button)findViewById(R.id.kaifang);
-        btnpingfang=(Button)findViewById(R.id.pingfang);
-        //设置按钮侦听事件
-        btn0.setOnClickListener(listener);
-        btn1.setOnClickListener(listener);
-        btn2.setOnClickListener(listener);
-        btn3.setOnClickListener(listener);
-        btn4.setOnClickListener(listener);
-        btn5.setOnClickListener(listener);
-        btn6.setOnClickListener(listener);
-        btn7.setOnClickListener(listener);
-        btn8.setOnClickListener(listener);
-        btn9.setOnClickListener(listener);
-        //执行运算
-        btnadd.setOnClickListener(listener);
-        btnsubtract.setOnClickListener(listener);
-        btnmultiply.setOnClickListener(listener);
-        btndivide.setOnClickListener(listener);
-        btnclear.setOnClickListener(listener);
-        btnresult.setOnClickListener(listener);
-
-        btndot.setOnClickListener(listener);
-        btnzhengshu.setOnClickListener(listener);
-        btnkaifang.setOnClickListener(listener);
-        btnpingfang.setOnClickListener(listener);
-
+        input = (TextView) findViewById(R.id.id_input);
+        result = (TextView) findViewById(R.id.id_result);
     }
 
-    private OnClickListener listener=new OnClickListener()
-    {
-
-        public void onClick(View v)
-        {
-            // TODO Auto-generated method stub
-            switch (v.getId())
-            {
-                //输入数字
-                case R.id.zero:
-                    num(0) ;
-                    break;
-                case R.id.one:
-                    num(1) ;
-                    break;
-                case R.id.two:
-                    num(2) ;
-                    break;
-                case R.id.three:
-                    num(3) ;
-                    break;
-                case R.id.four:
-                    num(4) ;
-                    break;
-                case R.id.five:
-                    num(5) ;
-                    break;
-                case R.id.six:
-                    num(6) ;
-                    break;
-                case R.id.seven:
-                    num(7) ;
-                    break;
-                case R.id.eight:
-                    num(8) ;
-                    break;
-                case R.id.nine:
-                    num(9) ;
-                    break;
-
-                case R.id.dot:
-                    dot();
-                    break;
-                //执行运算
-                case R.id.zhengfu:
-                    zhengfu();
-                    break;
-                case R.id.kaifang:
-                    kaifang();
-                    break;
-                case R.id.pingfang:
-                    pingfang();
-                    break;
-                case R.id.add:
-                    add();
-                    break;
-                case R.id.subtract:
-                    sub() ;
-                    break;
-                case R.id.multiply:
-                    multiply() ;
-                    break;
-                case R.id.divide:
-                    divide() ;
-                    break;
-                case R.id.clear:
-                    clear();
-                    break;
-                //计算结果
-                case R.id.result:
-                    result();
-                    if(!errBoolean&&flagBoolean){
-                        output.setText(String.valueOf(result));
-                    }
-
-                default:
-                    break;
-
-            }
-//		if(strold==""&&act==' '&&str=="")
-//		{
-//			input.setText("");
-//		}
-//		else {
-//			input.setText(strold+act+str);
-//		}
-            if(act=='k')
-            {
-                input.setText(strold);
-
-            }
-            else {
-                input.setText(strold+act+str);
-            }
-
-            output.setText(String.valueOf(result));
-            if(act=='j')
-            {
-                input.setText(strold);
-
-            }
-            else {
-                input.setText(strold+act+str);
-            }
-
-            output.setText(String.valueOf(result));
-        }
-        private void kaifang()
-        {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                act='k';
-                strold=str;
-//		   str="";
-                result();
-            }
-        }
-        private void pingfang()
-        {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                act='j';
-                strold=str;
-//		   str="";
-                result();
-            }
-        }
-        private void zhengfu()
-        {
-            // TODO Auto-generated method stub
-            if(strold=="")
-            {
-                result=Double.valueOf(str);
-            }
-            else
-            {
-                result=Double.valueOf(strold);
-
-            }
-
-            result=result*(-1);
-            strold=String.valueOf(result);
-            output.setText(String.valueOf(result));
-        }
-        private void dot()
-        {
-            // TODO Auto-generated method stub
-
-            if(!flagDot)
-            {
-                str=str+".";
-                flagBoolean=false;
-                flagDot=true;
-            }
-//	   str=str+i;
-//	   flagBoolean=false;
-        }
-        private void clear() {
-            // TODO Auto-generated method stub
-            str=strold="";
-            count=0;
-            act=' ';
-            result=0.0;
-            flagBoolean=false;
-            flagDot=false;
-            input.setText(strold+act+str);
-            output.setText("");
-        }
-        private void divide() {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                check();
-                act='/';
-                flagBoolean=false;
-            }
-        }
-        private void multiply() {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                check();
-                act='*';
-                flagBoolean=false;
-            }
-        }
-        private void sub() {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                check();
-                act='-';
-                flagBoolean=false;
-            }
-        }
-        private void add() {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                check();
-                act='+';
-                flagBoolean=false;
-            }
-        }
-        private void check() {
-            // TODO Auto-generated method stub
-            if(count>=1)
-            {
-                result();
-                str=String.valueOf(result);
-            }
-            strold=str;
-            str="";
-            count++;
-            flagDot=false;
-        }
-        //计算输出结果
-        private void result() {
-            // TODO Auto-generated method stub
-            if(flagBoolean)
-            {
-                Double a,b;
-//	    		if(act=='k'||act=='c')
-//	    		{
-//	    			a=Double.parseDouble(strold);
-//	    		}
-//	    		else {
-//	    			a=Double.parseDouble(strold);
-//			    	b=Double.parseDouble(str);
-//				}
-                a=Double.parseDouble(strold);
-                b=Double.parseDouble(str);
-
-                if(b==0&&act=='/') {
-                    clear();
-                    output.setText("除数不能为零!");
-                    errBoolean=true;
+    private void symbolSolve(String s) {
+        int len = str.length();
+        switch (s) {
+            case "-":
+                if (len == 0) {
+                    str.append("-");
+                    return;
                 }
-                if(!errBoolean)
-                {
-                    switch(act){
-                        case '+':
-                            result=a+b;
-                            break;
-                        case '-':
-                            result=a-b;
-                            break;
-                        case '*':
-                            result=a*b;
-                            break;
-                        case '/':
-                            result=a/b;
-                            break;
-                        case 'k':
-                            result=Math.sqrt(a);
-                            break;
-                        case 'j':
-                            result=Math.pow(a,2);
-                            break;
-
-                        default:
-                            break;
-                    }
+                if (str.charAt(len - 1) == '*' || str.charAt(len - 1) == '/') {
+                    str.append(s);
+                } else if (isOperator(str.charAt(len - 1) + "")) {
+                    str.replace(len - 1, len, s);
+                } else {
+                    str.append(s);
                 }
+                break;
+            case "+":
+            case "*":
+            case "/":
+                if (len == 0) return;
+                if (isOperator(str.charAt(len - 1) + "")) {
+                    str.replace(len - 1, len, s);
+                } else {
+                    str.append(s);
+                }
+                break;
+        }
+    }
 
+    public void xml_OnClick(View view) {
+        try {
+            switch (view.getId()) {
+                case R.id.btn_clear:
+                    tvClear(input, result);
+                    str.setLength(0);
+                    break;
+                case R.id.btn_delete:
+                    int len = str.length();
+                    if (len == 0) return;
+                    input.setText(str.deleteCharAt(len - 1));
+                    break;
+
+                case R.id.btn_add:
+                    symbolSolve("+");
+                    input.setText(str);
+                    return;
+                case R.id.btn_sub:
+                    symbolSolve("-");
+                    input.setText(str);
+                    return;
+                case R.id.btn_mul:
+                    symbolSolve("*");
+                    input.setText(str);
+                    return;
+                case R.id.btn_divide:
+                    symbolSolve("/");
+                    input.setText(str);
+                    return;
+
+                case R.id.btn_equals:
+                    if (str.length() == 0) return;
+                    if (str.length() == 1 && str.charAt(0) == '-') return;
+                    DecimalFormat df = new DecimalFormat("###.###############");//DecimalFormat 类主要靠 # 和 0 两种占位符号来指定数字长度。
+                    // 0 表示如果位数不足则以 0 填充，# 表示只要有可能就把数字拉上这个位置
+                    String num = null;
+                    double d = calculate(str.toString());
+                    if (Double.isNaN(d) || Double.isInfinite(d))//public boolean isInfinite()
+                       // 如果此对象表示的值是正无穷大或负无穷大，则返回 true；否则返回 false。
+                    //public boolean isNaN()
+                    //如果此值是一个非数字 (NaN) 值，则返回 true，否则返回 false。
+                         {
+                        result.setText("不能除以0");
+                    } else {
+                        try {
+                            num = df.format(d);
+                        } catch (Exception e) {
+                            System.out.println("错误！");
+                        }
+                        result.setText("-0".equals(num) ? "0" : num);
+                    }
+                    result.setTextColor(Color.parseColor("#ff00ff"));
+                    result.setTextSize(36);
+                    return;
+
+                case R.id.btn_dot:
+                    str.append(".");
+                    break;
+                case R.id.btn_0:
+                    str.append("0");
+                    break;
+                case R.id.btn_1:
+                    str.append("1");
+                    break;
+                case R.id.btn_2:
+                    str.append("2");
+                    break;
+                case R.id.btn_3:
+                    str.append("3");
+                    break;
+                case R.id.btn_4:
+                    str.append("4");
+                    break;
+                case R.id.btn_5:
+                    str.append("5");
+                    break;
+                case R.id.btn_6:
+                    str.append("6");
+                    break;
+                case R.id.btn_7:
+                    str.append("7");
+                    break;
+                case R.id.btn_8:
+                    str.append("8");
+                    break;
+                case R.id.btn_9:
+                    str.append("9");
+                    break;
+            }
+            input.setText(str);
+
+            int len = str.length();
+            if (len != 0) {
+                DecimalFormat df = new DecimalFormat("###.###############");
+                String num = null;
+                double d = calculate(str.toString());
+                if (Double.isNaN(d) || Double.isInfinite(d)) {
+                    result.setText("不能除以0");
+                } else {
+                    try {
+                        num = df.format(d);
+                    } catch (Exception e) {
+                        System.out.println("错误！");
+                    }
+                    result.setText("-0".equals(num) ? "0" : num);
+                }
+            }
+        } catch (NumberFormatException e) {
+            result.setText("错误");
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isOperator(String s) {
+        return s.equals("+") ||
+                s.equals("-") ||
+                s.equals("*") ||
+                s.equals("/");
+    }
+
+    private void tvClear(TextView input, TextView result) {
+        input.setText("");
+        result.setText("");
+        result.setTextColor(Color.parseColor("#aaaaaa"));
+        result.setTextSize(28);
+    }
+
+    private double calculate(String s) {
+        Queue<String> q = getPostfixExpression(s); // 中缀表达式转为后缀表达式
+        return calculatePostfixExpression(q);
+    }
+
+    Stack<Double> stack = new Stack<>();
+
+    private double calculatePostfixExpression(Queue<String> queue) {
+        stack.clear();
+        int len = queue.size();
+        double num1 = 0.0, num2 = 0.0, num3 = 0.0;
+        for (int i = 0; i < len; ++i) {
+            String s = queue.poll();
+            if (!isOperator(s)) {
+                stack.push(Double.valueOf(s));
+            } else {
+                if (stack.isEmpty()) return 0.0;
+                num2 = stack.pop();
+                if (stack.isEmpty()) return num2;
+                num1 = stack.pop();
+                switch (s) {
+                    case "+":
+                        num3 = num1 + num2;
+                        break;
+                    case "-":
+                        num3 = num1 - num2;
+                        break;
+                    case "*":
+                        num3 = num1 * num2;
+                        break;
+                    case "/":
+                        num3 = num1 / num2;
+                        break;
+                }
+                stack.push(num3);
             }
         }
+        return stack.peek();
+    }
 
-        private void num(int i) {
-            // TODO Auto-generated method stub
-            str=str+String.valueOf(i);
-            flagBoolean=true;
+    Stack<Character> stack2 = new Stack<>();
+    Queue<String> queue2 = new LinkedList<>();
+    StringBuilder strNum = new StringBuilder();
+
+    // 获得后缀表达式
+    public Queue<String> getPostfixExpression(String s) {
+        stack2.clear();
+        int len = s.length();
+        strNum.setLength(0);
+        queue2.clear();
+        char temp = ' ';
+        for (int i = 0; i < len; ++i) {
+            temp = str.charAt(i);
+            if (temp >= '0' && temp <= '9' || temp == '.') {
+                strNum.append(temp);
+            } else {
+                if (i == 0 || isOperator(str.charAt(i - 1) + "")) {
+                    // 考虑负数的情况，比如乘以除以负数
+                    strNum.append(temp);
+                    continue;
+                }
+                queue2.add(strNum.toString()); // 数字进队列
+                strNum.setLength(0);
+                if (stack2.isEmpty()) {
+                    stack2.push(temp);
+                } else {
+                    while (!stack2.isEmpty()) {
+                        char top = stack2.peek();
+                        if (getPriority(top) >= getPriority(temp)) {
+                            queue2.add(top + "");
+                            stack2.pop();
+                        } else {
+                            break;
+                        }
+                    }
+                    stack2.push(temp);
+                }
+            }
         }
-    };
+        if (strNum.length() != 0) {
+            queue2.add(strNum.toString()); // 数字进队列
+        }
+        if (stack2.isEmpty()) {
+            stack2.push(temp);
+        } else {
+            while (!stack2.isEmpty()) {
+                char top = stack2.peek();
+                queue2.add(top + "");
+                stack2.pop();
+            }
+        }
+        return queue2;
+    }
+
+    private int getPriority(char top) {
+        if (top == '+' || top == '-')
+            return 1;
+        return 2; // 只有加减乘除
+    }
 }
